@@ -27,8 +27,8 @@ class HTMLNode:
 class LeafNode(HTMLNode):
     def __init__(self, tag, value, prop=None):
         super().__init__()
-        self.value = value
         self.tag = tag
+        self.value = value
         self.prop = prop
 
     def to_html(self):
