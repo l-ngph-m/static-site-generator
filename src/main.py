@@ -1,37 +1,20 @@
-from textnode import TextNode, TextType
-from htmlnode import HTMLNode, LeafNode, ParentNode
+import os
+import shutil
+
+from copystatic import copy_files_recursive
 
 
-def main():
-    text_node = TextNode("This is some anchor text", "link", "https://boot.dev")
-    print(text_node)
+dir_path_static = "./static"
+dir_path_public = "./public"
 
 
-def text_node_to_html_node(text_node):
-    match text_node.text_type:
-        case TextType.TEXT:
-            return LeafNode(None, text_node.text)
+def main() -> None:
+    print("Deleting public directory...")
+    if os.path.exists(dir_path_public):
+        shutil.rmtree(dir_path_public)
 
-        case TextType.BOLD:
-            return LeafNode("b", text_node.text)
-
-        case TextType.ITALIC:
-            return LeafNode("i", text_node.text)
-
-        case TextType.CODE:
-            return LeafNode("code", text_node.text)
-
-        case TextType.LINK:
-            return LeafNode("a", text_node.text, {"href": f"{text_node.url}"})
-
-        case TextType.IMAGE:
-            return LeafNode(
-                "img", None, {"src": f"{text_node.url}", "alt": f"{text_node.text}"}
-            )
-
-        case _:
-            raise Exception("Not a valid text type")
+    print("Copying static files to public directory...")
+    copy_files_recursive(dir_path_static, dir_path_public)
 
 
-if __name__ == "__main__":
-    main()
+main()
