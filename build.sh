@@ -1,1 +1,1 @@
-python3 src/main.py "/l-ngph-m/"
+python3 src/main.py "/static-site-generator/"
